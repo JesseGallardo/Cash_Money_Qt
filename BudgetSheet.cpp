@@ -13,7 +13,8 @@
 #include "Credit.h"
 
 void BudgetSheet::addDebit(string name, string date, string type, double value){
-    Debit temp = new Debit(name, date, type, value);
+    //Debit temp = new Debit(name, date, type, value);
+    Debit temp(name, date, type ,value);
     DebitList.insert(make_pair(name, temp));
     cout << "Added " << name << " Successfully!" << endl;
 }//addDebit
@@ -38,7 +39,7 @@ void BudgetSheet::printDebit(string name){
         cout << "Name: " << temp.getNameOf() << endl;
         cout << "Date: " << temp.getDateOf() << endl;
         cout << "Type: " << temp.getTypeOf() << endl;
-        cout << "Value: " << temp.getValueOf() << endl;
+        cout << "Value: $" << temp.getValueOf() << endl;
     }
     else{
         cout << "Item not in list." << endl;
@@ -47,7 +48,8 @@ void BudgetSheet::printDebit(string name){
 
 
 void BudgetSheet::addCredit(string name, string date, string type, double value){
-    Credit temp = new Credit(name, date, type, value);
+    //Credit temp = new Credit(name, date, type, value);
+    Credit temp(name, date, type, value);
     CreditList.insert(make_pair(name , temp));
     cout << "Added " << name << " successfully!" << endl;
 }//addCredit
@@ -57,7 +59,7 @@ void BudgetSheet::removeCredit(string name){
     it = CreditList.find(name);
     if(it != CreditList.end()){
         CreditList.erase(it);
-        cout << name << " deleted successfully!";
+        cout << name << " deleted successfully!" << endl;
     }//if
     else{
         cout << name << " is not in the list!" << endl;
@@ -72,6 +74,9 @@ void BudgetSheet::printCredit(string name){
         cout << "Date: " << temp.getDateOf() << endl;
         cout << "Type: " << temp.getTypeOf() << endl;
         cout << "Value: " << temp.getValueOf() << endl;
+    }
+    else{
+        cout << "Item not in list!" << endl;
     }
 }
 
