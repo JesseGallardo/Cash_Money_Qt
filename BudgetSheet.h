@@ -25,6 +25,8 @@ public:
     void addDebit(string name, string date, string type, double value); //adds a debit items to the list
     void removeDebit(string name); //removes a debit item from the list
     void printDebit(string name); //prints a debit item's values
+    int getDLSize(); //gets the size of DebitList
+    Debit getDebitAt(int index);
 
     void addCredit(string name, string date, string type, double value); //adds a credit item to the list
     void removeCredit(string name); //removes a credit item from the list

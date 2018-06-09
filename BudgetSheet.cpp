@@ -46,6 +46,26 @@ void BudgetSheet::printDebit(string name){
     }
 }//printDebit
 
+int BudgetSheet::getDLSize(){
+    return DebitList.size();
+}
+
+Debit BudgetSheet::getDebitAt(int index){
+    if(index < DebitList.size()){
+        map<string, Debit>::iterator it = DebitList.begin();
+
+        for(int i = 0; i < DebitList.size(); i++){
+            it++;
+        }
+
+        return it->second;
+    }
+    else{
+        Debit temp;
+        return temp;
+    }
+}
+
 
 void BudgetSheet::addCredit(string name, string date, string type, double value){
     //Credit temp = new Credit(name, date, type, value);
