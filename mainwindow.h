@@ -14,9 +14,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void setMessages();
 
 private slots:
-    void on_existingok_clicked();
+
 
 private:
     Ui::MainWindow *ui;
