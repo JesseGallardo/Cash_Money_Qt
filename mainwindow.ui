@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
-    <height>367</height>
+    <width>464</width>
+    <height>378</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>0</y>
       <width>160</width>
-      <height>331</height>
+      <height>341</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="DebitCreditLayout">
@@ -39,6 +39,13 @@
       </layout>
      </item>
      <item>
+      <widget class="QPushButton" name="DebitRemoveButton">
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QVBoxLayout" name="CreditItemsLayout">
        <item>
         <widget class="QLabel" name="CreditLabel">
@@ -51,6 +58,13 @@
         <widget class="QListWidget" name="CreditList"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="CreditRemoveButton">
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -265,11 +279,11 @@
      <string>Create Item</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="NewItemButton">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>250</y>
+      <x>270</x>
+      <y>260</y>
       <width>71</width>
       <height>32</height>
      </rect>
@@ -281,8 +295,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>150</y>
+      <x>210</x>
+      <y>160</y>
       <width>191</width>
       <height>41</height>
      </rect>
@@ -299,9 +313,9 @@
    <widget class="QWidget" name="horizontalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>200</y>
-      <width>191</width>
+      <x>190</x>
+      <y>210</y>
+      <width>271</width>
       <height>41</height>
      </rect>
     </property>
@@ -310,22 +324,27 @@
       <widget class="QComboBox" name="NewMonth">
        <item>
         <property name="text">
-         <string>Jan.</string>
+         <string>Month</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Feb.</string>
+         <string>Jan</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Mar.</string>
+         <string>Feb</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Apr.</string>
+         <string>Mar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Apr</string>
         </property>
        </item>
        <item>
@@ -345,27 +364,186 @@
        </item>
        <item>
         <property name="text">
-         <string>Aug.</string>
+         <string>Aug</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Sept.</string>
+         <string>Sept</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Oct.</string>
+         <string>Oct</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Nov.</string>
+         <string>Nov</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Dec.</string>
+         <string>Dec</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="NewDay">
+       <item>
+        <property name="text">
+         <string>Day</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>11</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>12</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>13</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>14</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>15</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>16</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>17</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>18</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>19</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>20</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>21</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>22</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>23</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>24</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>25</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>26</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>27</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>28</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>29</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>30</string>
         </property>
        </item>
       </widget>
@@ -385,6 +563,58 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="HelpButton">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>310</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>How To/Help?</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="NewNameLabel">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>150</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="NewValueLabel">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>150</y>
+      <width>60</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Value($)</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="FinishedButton">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>310</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Finished</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

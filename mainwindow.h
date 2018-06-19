@@ -23,6 +23,10 @@ private slots:
 
     void on_CreateButton_clicked();
 
+    void on_NewItemButton_clicked();
+
+    void on_LoadButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
