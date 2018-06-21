@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     checkDirectory();
     setMessages();
+    resizeQComboBoxes();
 }
 
 MainWindow::~MainWindow()
@@ -51,13 +52,26 @@ void MainWindow::checkDirectory(){
     }
 }
 
+void MainWindow::resizeQComboBoxes(){
+    int width1 = ui->CreateMonth->minimumSizeHint().width();
+
+    ui->CreateMonth->setMinimumWidth(width1);
+    ui->CreateMonth->view()->setMinimumWidth(width1);
+
+    ui->LoadMonth->setMinimumWidth(width1);
+    ui->LoadMonth->view()->setMinimumWidth(width1);
+}
+
+string MainWindow::getFileDirectory(){
+    //This works for Mac and possibly Linux, unsure about Windows
+    string temp(getenv("HOME"));
+    temp += "/Desktop/BudgetSheet/";
+    return temp;
+}
+
 /*Sockets*/
 void MainWindow::on_CreateButton_clicked()
 {
-    //This works for Mac and possibly Linux, unsure about Windows
-    string path(getenv("HOME"));
-    path += "/Desktop/BudgetSheet/";
-
     QString qmonth = ui->CreateMonth->currentText();
     QString qyear = ui->CreateYear->text();
 
@@ -70,7 +84,7 @@ void MainWindow::on_CreateButton_clicked()
 
     string fname = month + "-" + year + ".txt";
 
-    path += fname;
+    string path = getFileDirectory() + fname;
 
     ofstream newf(path);
     newf << "empty" << endl;
@@ -105,10 +119,7 @@ void MainWindow::on_NewItemButton_clicked()
 
 void MainWindow::on_LoadButton_clicked()
 {
-    //try using iostream.peek() to see if empty when loading the file
-    string path(getenv("HOME"));
-    path += "/Desktop/BudgetSheet/";
-
+    cout << "hi" << endl;
     QString qmonth = ui->LoadMonth->currentText();
     QString qyear = ui->LoadYear->text();
 
@@ -121,15 +132,18 @@ void MainWindow::on_LoadButton_clicked()
 
     string fname = month + "-" + year + ".txt";
 
-    path += fname;
+    string path = getFileDirectory() + fname;
 
     fstream loadFile;
 
     loadFile.open(path, fstream::in);
 
     if(!loadFile.is_open()){
+        cout << "Error opening file" << endl;
         return;
     }
+
+    loadedFName = fname;
 
     string line;
     int lineNum = 0;
@@ -139,15 +153,17 @@ void MainWindow::on_LoadButton_clicked()
         if(line == "empty"){
             break;
         }
-        else if(lineNum > 3){
+        else if(lineNum > 4){
             if(line == "-----"){
                 fiveLineNum++;
                 if(fiveLineNum == 2){
                     break;
                 }
-
                 continue;
             }//if
+            else if(line == "Credit:"){
+                continue;
+            }
             else{
                 /*Use the global budgetsheet item known as "bs"*/
                 if(fiveLineNum == 0){
@@ -160,6 +176,23 @@ void MainWindow::on_LoadButton_clicked()
         }//else-if
     }//while
 
+    loadFile.close();
+}
 
 
+
+void MainWindow::on_FinishedButton_clicked()
+{
+    fstream fwrite;
+    string path = getFileDirectory() + loadedFName;
+
+    fwrite.open(path, std::fstream::out | fstream::trunc);
+
+    fwrite << loadedFName << " BudgetSheet Extravaganza!" << endl;
+    fwrite << "# of Debit Items: " << bs.getDLSize() << ", # of Credit Items: " << bs.getCLSize() << ", Net Value: $" << endl;
+    fwrite << "------------------------------------------------------------------------------------------" << endl;
+
+    fwrite.close();
+
+    loadedFName = "";
 }

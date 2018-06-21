@@ -100,6 +100,10 @@ void BudgetSheet::printCredit(string name){
     }
 }
 
+int BudgetSheet::getCLSize(){
+    return CreditList.size();
+}
+
 BudgetSheet::BudgetSheet() {
 
 }

@@ -31,6 +31,7 @@ public:
     void addCredit(string name, string date, string type, double value); //adds a credit item to the list
     void removeCredit(string name); //removes a credit item from the list
     void printCredit(string name); //prints a credit item's value
+    int getCLSize();
 };
 
 #endif /* BUDGETSHEET_H_ */

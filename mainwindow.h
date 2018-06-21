@@ -16,7 +16,8 @@ public:
     ~MainWindow();
     void setMessages();
     void checkDirectory();
-    //void createFile();
+    void resizeQComboBoxes();
+    std::string getFileDirectory();
 
 private slots:
 
@@ -26,6 +27,8 @@ private slots:
     void on_NewItemButton_clicked();
 
     void on_LoadButton_clicked();
+
+    void on_FinishedButton_clicked();
 
 private:
     Ui::MainWindow *ui;

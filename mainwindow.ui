@@ -108,17 +108,17 @@
       <widget class="QComboBox" name="LoadMonth">
        <item>
         <property name="text">
-         <string>Jan.</string>
+         <string>Jan</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Feb.</string>
+         <string>Feb</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Mar.</string>
+         <string>Mar</string>
         </property>
        </item>
        <item>
@@ -143,27 +143,27 @@
        </item>
        <item>
         <property name="text">
-         <string>Aug.</string>
+         <string>Aug</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Sept.</string>
+         <string>Sept</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Oct.</string>
+         <string>Oct</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Nov.</string>
+         <string>Nov</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Dec.</string>
+         <string>Dec</string>
         </property>
        </item>
       </widget>
@@ -194,17 +194,17 @@
       <widget class="QComboBox" name="CreateMonth">
        <item>
         <property name="text">
-         <string>Jan.</string>
+         <string>Jan</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Feb.</string>
+         <string>Feb</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Mar.</string>
+         <string>Mar</string>
         </property>
        </item>
        <item>
@@ -229,27 +229,27 @@
        </item>
        <item>
         <property name="text">
-         <string>Aug.</string>
+         <string>Aug</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Sept.</string>
+         <string>Sept</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Oct.</string>
+         <string>Oct</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Nov.</string>
+         <string>Nov</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Dec.</string>
+         <string>Dec</string>
         </property>
        </item>
       </widget>
