@@ -55,6 +55,9 @@ Debit BudgetSheet::getDebitAt(int index){
         map<string, Debit>::iterator it = DebitList.begin();
 
         for(int i = 0; i < DebitList.size(); i++){
+            if(i == index){
+                return it->second;
+            }
             it++;
         }
 

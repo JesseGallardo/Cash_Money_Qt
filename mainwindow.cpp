@@ -1,6 +1,7 @@
 #include <QtWidgets>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
@@ -69,6 +70,72 @@ string MainWindow::getFileDirectory(){
     return temp;
 }
 
+void MainWindow::updateDebitList(){
+    int length = bs.getDLSize();
+    Debit temp;
+    string nameOf;
+    double valueOf;
+    string dateOf;
+
+    for(int i = 0; i < length; i++){
+        Debit temp = bs.getDebitAt(i);
+        string nameOf = temp.getNameOf();
+
+        ostringstream tempStr;
+        double value = temp.getValueOf();
+        tempStr << value;
+        string valueOf = tempStr.str();
+
+        string dateOf = temp.getDateOf();
+
+        string item = dateOf +  "-" + nameOf + "-$" + valueOf;
+
+        ui->DebitList->addItem(item.c_str());
+    }
+}
+
+string MainWindow::monthToNum(string month){
+    if(month == "Jan"){
+        return "1";
+    }
+    else if(month == "Feb"){
+        return "2";
+    }
+    else if(month == "Mar"){
+        return "3";
+    }
+    else if(month == "April"){
+        return "4";
+    }
+    else if(month == "May"){
+        return "5";
+    }
+    else if(month == "June"){
+        return "6";
+    }
+    else if(month == "July"){
+        return "7";
+    }
+    else if(month == "Aug"){
+        return "8";
+    }
+    else if(month == "Sept"){
+        return "9";
+    }
+    else if(month == "Oct"){
+        return "10";
+    }
+    else if(month == "Nov"){
+        return "11";
+    }
+    else if(month == "Dec"){
+        return "12";
+    }
+    else{
+        return "";
+    }
+}
+
 /*Sockets*/
 void MainWindow::on_CreateButton_clicked()
 {
@@ -108,13 +175,22 @@ void MainWindow::on_NewItemButton_clicked()
 
     string itemMonth = ui->NewMonth->currentText().toStdString();
     string itemDay = ui->NewDay->currentText().toStdString();
-    string itemDate = itemMonth + "/" + itemDay;
+    string itemDate = monthToNum(itemMonth) + "/" + itemDay;
 
     cout << itemName << ": $" << itemValue << endl;
 
     cout << itemDate << endl;
 
+    string itemType = ui->NewType->currentText().toStdString();
 
+    if(itemType == "Debit"){
+        bs.addDebit(itemName, itemDate, itemType, itemValue);
+        updateDebitList();
+    }
+    else{
+        bs.addCredit(itemName, itemDate, itemType, itemValue);
+
+    }
 }
 
 void MainWindow::on_LoadButton_clicked()

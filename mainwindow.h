@@ -18,6 +18,9 @@ public:
     void checkDirectory();
     void resizeQComboBoxes();
     std::string getFileDirectory();
+    void updateDebitList();
+    void updateCreditList();
+    std::string monthToNum(std::string month);
 
 private slots:
 
