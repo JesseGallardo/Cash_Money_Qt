@@ -12,6 +12,7 @@
 BudgetSheet bs;
 bool fileLoaded = false;
 string loadedFName;
+string loadedMonth;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -72,10 +73,6 @@ string MainWindow::getFileDirectory(){
 
 void MainWindow::updateDebitList(){
     int length = bs.getDLSize();
-    Debit temp;
-    string nameOf;
-    double valueOf;
-    string dateOf;
 
     for(int i = 0; i < length; i++){
         Debit temp = bs.getDebitAt(i);
@@ -91,6 +88,30 @@ void MainWindow::updateDebitList(){
         string item = dateOf +  "-" + nameOf + "-$" + valueOf;
 
         ui->DebitList->addItem(item.c_str());
+    }
+}
+
+void MainWindow::updateCreditList(){
+    int length = bs.getCLSize();
+    Credit temp;
+    string nameOf;
+    double valueOf;
+    string dateOf;
+
+    for(int i = 0; i < length; i++){
+        Credit temp = bs.getCreditAt(i);
+        string nameOf = temp.getNameOf();
+
+        ostringstream tempStr;
+        double value = temp.getValueOf();
+        tempStr << value;
+        string valueOf = tempStr.str();
+
+        string dateOf = temp.getDateOf();
+
+        string item = dateOf + "-" + nameOf + "-$" + valueOf;
+
+        ui->CreditList->addItem(item.c_str());
     }
 }
 
@@ -160,7 +181,7 @@ void MainWindow::on_CreateButton_clicked()
 
 void MainWindow::on_NewItemButton_clicked()
 {
-    if(ui->NewName->text() == "" || ui->NewValue->text() == "" || ui->NewMonth->currentText() == "Month" || ui->NewDay->currentText() == "Day"){
+    if(ui->NewName->text() == "" || ui->NewValue->text() == "" || ui->NewDay->currentText() == "Day"){
         cout << "Nope" << endl;
         return;
     }
@@ -173,9 +194,9 @@ void MainWindow::on_NewItemButton_clicked()
     itemValue = (int) (itemValue * 100 + .5);
     itemValue = (float)itemValue / 100;
 
-    string itemMonth = ui->NewMonth->currentText().toStdString();
+    //string itemMonth = ui->NewMonth->currentText().toStdString();
     string itemDay = ui->NewDay->currentText().toStdString();
-    string itemDate = monthToNum(itemMonth) + "/" + itemDay;
+    string itemDate = monthToNum(loadedMonth) + "/" + itemDay;
 
     cout << itemName << ": $" << itemValue << endl;
 
@@ -189,7 +210,7 @@ void MainWindow::on_NewItemButton_clicked()
     }
     else{
         bs.addCredit(itemName, itemDate, itemType, itemValue);
-
+        updateCreditList();
     }
 }
 
@@ -220,6 +241,7 @@ void MainWindow::on_LoadButton_clicked()
     }
 
     loadedFName = fname;
+    loadedMonth = month;
 
     string line;
     int lineNum = 0;
@@ -253,6 +275,10 @@ void MainWindow::on_LoadButton_clicked()
     }//while
 
     loadFile.close();
+
+    ui->LoadButton->setEnabled(false);
+
+
 }
 
 
@@ -271,4 +297,6 @@ void MainWindow::on_FinishedButton_clicked()
     fwrite.close();
 
     loadedFName = "";
+
+    ui->LoadButton->setEnabled(true);
 }

@@ -107,6 +107,22 @@ int BudgetSheet::getCLSize(){
     return CreditList.size();
 }
 
+Credit BudgetSheet::getCreditAt(int index){
+    if(index < CreditList.size()){
+        map<string, Credit>::iterator it = CreditList.begin();
+        for(int i = 0; i < CreditList.size(); i++){
+            if(i == index){
+                return it->second;
+            }
+            it++;
+        }
+    }
+    else{
+        Credit temp;
+        return temp;
+    }
+}
+
 BudgetSheet::BudgetSheet() {
 
 }

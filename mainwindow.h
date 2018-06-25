@@ -21,6 +21,7 @@ public:
     void updateDebitList();
     void updateCreditList();
     std::string monthToNum(std::string month);
+    void setButtonUnclickable();
 
 private slots:
 
