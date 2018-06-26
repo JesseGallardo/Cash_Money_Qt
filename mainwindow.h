@@ -21,7 +21,8 @@ public:
     void updateDebitList();
     void updateCreditList();
     std::string monthToNum(std::string month);
-    void setButtonUnclickable();
+    void setSpecialRules();
+    std::string ithWord(std::string text, int ith);
 
 private slots:
 
@@ -33,6 +34,10 @@ private slots:
     void on_LoadButton_clicked();
 
     void on_FinishedButton_clicked();
+
+    void on_DebitRemoveButton_clicked();
+
+    void on_CreditRemoveButton_clicked();
 
 private:
     Ui::MainWindow *ui;

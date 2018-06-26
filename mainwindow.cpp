@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <QDoubleValidator>
+#include <QIntValidator>
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
@@ -13,6 +15,7 @@ BudgetSheet bs;
 bool fileLoaded = false;
 string loadedFName;
 string loadedMonth;
+int total;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     checkDirectory();
     setMessages();
     resizeQComboBoxes();
+    setSpecialRules();
 }
 
 MainWindow::~MainWindow()
@@ -72,6 +76,8 @@ string MainWindow::getFileDirectory(){
 }
 
 void MainWindow::updateDebitList(){
+    ui->DebitList->clear();
+
     int length = bs.getDLSize();
 
     for(int i = 0; i < length; i++){
@@ -92,11 +98,9 @@ void MainWindow::updateDebitList(){
 }
 
 void MainWindow::updateCreditList(){
+    ui->CreditList->clear();
+
     int length = bs.getCLSize();
-    Credit temp;
-    string nameOf;
-    double valueOf;
-    string dateOf;
 
     for(int i = 0; i < length; i++){
         Credit temp = bs.getCreditAt(i);
@@ -157,6 +161,28 @@ string MainWindow::monthToNum(string month){
     }
 }
 
+string MainWindow::ithWord(string text, int ith){
+    char *dup = strdup(text.c_str());
+
+    int loop = 1;
+    char *tok = strtok(dup, "-");
+
+    while(tok != NULL){
+        if(loop == ith){
+            string word(tok);
+            return word;
+        }
+        loop++;
+        tok = strtok(NULL, "-");
+    }
+}
+
+void MainWindow::setSpecialRules(){
+    ui->NewValue->setValidator(new QDoubleValidator(0, 100000, 2, this));
+    ui->CreateYear->setValidator(new QIntValidator(0, 10000, this));
+    ui->LoadYear->setValidator(new QIntValidator(0, 10000, this));
+}
+
 /*Sockets*/
 void MainWindow::on_CreateButton_clicked()
 {
@@ -181,7 +207,7 @@ void MainWindow::on_CreateButton_clicked()
 
 void MainWindow::on_NewItemButton_clicked()
 {
-    if(ui->NewName->text() == "" || ui->NewValue->text() == "" || ui->NewDay->currentText() == "Day"){
+    if(ui->NewName->text() == "" || ui->NewValue->text() == "" || ui->NewDay->currentText() == "Day" || loadedMonth == ""){
         cout << "Nope" << endl;
         return;
     }
@@ -206,10 +232,12 @@ void MainWindow::on_NewItemButton_clicked()
 
     if(itemType == "Debit"){
         bs.addDebit(itemName, itemDate, itemType, itemValue);
+        total += itemValue;
         updateDebitList();
     }
     else{
         bs.addCredit(itemName, itemDate, itemType, itemValue);
+        total -= itemValue;
         updateCreditList();
     }
 }
@@ -281,8 +309,6 @@ void MainWindow::on_LoadButton_clicked()
 
 }
 
-
-
 void MainWindow::on_FinishedButton_clicked()
 {
     fstream fwrite;
@@ -299,4 +325,35 @@ void MainWindow::on_FinishedButton_clicked()
     loadedFName = "";
 
     ui->LoadButton->setEnabled(true);
+}
+
+void MainWindow::on_DebitRemoveButton_clicked()
+{
+    if(ui->DebitList->currentItem() != NULL){
+        QListWidgetItem *item = ui->DebitList->currentItem();
+        QString temp = item->text();
+        string itemString = temp.toStdString();
+
+        string itemName = ithWord(itemString, 2);
+
+        bs.removeDebit(itemName);
+
+        updateDebitList();
+    }
+
+}
+
+void MainWindow::on_CreditRemoveButton_clicked()
+{
+    if(ui->CreditList->currentItem() != NULL){
+        QListWidgetItem *item = ui->CreditList->currentItem();
+        QString temp = item->text();
+        string itemString = temp.toStdString();
+
+        string itemName = ithWord(itemString, 2);
+
+        bs.removeCredit(itemName);
+
+        updateCreditList();
+    }
 }
