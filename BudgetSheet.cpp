@@ -12,11 +12,18 @@
 #include "Debit.h"
 #include "Credit.h"
 
-void BudgetSheet::addDebit(string name, string date, string type, double value){
-    //Debit temp = new Debit(name, date, type, value);
-    Debit temp(name, date, type ,value);
-    DebitList.insert(make_pair(name, temp));
-    cout << "Added " << name << " Successfully!" << endl;
+bool BudgetSheet::addDebit(string name, string date, string type, double value){
+    if(DebitList.find(name) == DebitList.end()){
+        Debit temp(name, date, type ,value);
+        DebitList.insert(make_pair(name, temp));
+        cout << "Added " << name << " Successfully!" << endl;
+        return true;
+    }
+    else{
+        cout << name << " exists already" << endl;
+        return false;
+    }
+
 }//addDebit
 
 void BudgetSheet::removeDebit(string name){
@@ -70,11 +77,18 @@ Debit BudgetSheet::getDebitAt(int index){
 }
 
 
-void BudgetSheet::addCredit(string name, string date, string type, double value){
+bool BudgetSheet::addCredit(string name, string date, string type, double value){
     //Credit temp = new Credit(name, date, type, value);
-    Credit temp(name, date, type, value);
-    CreditList.insert(make_pair(name , temp));
-    cout << "Added " << name << " successfully!" << endl;
+    if(CreditList.find(name) == CreditList.end()){
+        Credit temp(name, date, type, value);
+        CreditList.insert(make_pair(name , temp));
+        cout << "Added " << name << " successfully!" << endl;
+        return true;
+    }
+    else{
+        cout << name << " exists already!" << endl;
+        return false;
+    }
 }//addCredit
 
 void BudgetSheet::removeCredit(string name){

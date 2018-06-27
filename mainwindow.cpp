@@ -91,7 +91,7 @@ void MainWindow::updateDebitList(){
 
         string dateOf = temp.getDateOf();
 
-        string item = dateOf +  "-" + nameOf + "-$" + valueOf;
+        string item = dateOf +  " " + nameOf + " $" + valueOf;
 
         ui->DebitList->addItem(item.c_str());
     }
@@ -113,7 +113,7 @@ void MainWindow::updateCreditList(){
 
         string dateOf = temp.getDateOf();
 
-        string item = dateOf + "-" + nameOf + "-$" + valueOf;
+        string item = dateOf + " " + nameOf + " $" + valueOf;
 
         ui->CreditList->addItem(item.c_str());
     }
@@ -165,7 +165,7 @@ string MainWindow::ithWord(string text, int ith){
     char *dup = strdup(text.c_str());
 
     int loop = 1;
-    char *tok = strtok(dup, "-");
+    char *tok = strtok(dup, " ");
 
     while(tok != NULL){
         if(loop == ith){
@@ -173,7 +173,7 @@ string MainWindow::ithWord(string text, int ith){
             return word;
         }
         loop++;
-        tok = strtok(NULL, "-");
+        tok = strtok(NULL, " ");
     }
 }
 
@@ -231,14 +231,28 @@ void MainWindow::on_NewItemButton_clicked()
     string itemType = ui->NewType->currentText().toStdString();
 
     if(itemType == "Debit"){
-        bs.addDebit(itemName, itemDate, itemType, itemValue);
-        total += itemValue;
-        updateDebitList();
+        if(bs.addDebit(itemName, itemDate, itemType, itemValue) == true){
+            total += itemValue;
+            updateDebitList();
+        }
+        else{
+            QMessageBox error;
+            error.setText("No Duplicate Names Allowed.");
+            error.setInformativeText("If you must, include '(#)' after the name where # is a number.");
+            error.exec();
+        }
     }
     else{
-        bs.addCredit(itemName, itemDate, itemType, itemValue);
-        total -= itemValue;
-        updateCreditList();
+        if(bs.addCredit(itemName, itemDate, itemType, itemValue)){
+            total -= itemValue;
+            updateCreditList();
+        }
+        else{
+            QMessageBox error;
+            error.setText("No Duplicate Names Allowed.");
+            error.setInformativeText("If you must, include '(#)' after the name where # is a number.");
+            error.exec();
+        }
     }
 }
 
@@ -316,9 +330,22 @@ void MainWindow::on_FinishedButton_clicked()
 
     fwrite.open(path, std::fstream::out | fstream::trunc);
 
-    fwrite << loadedFName << " BudgetSheet Extravaganza!" << endl;
     fwrite << "# of Debit Items: " << bs.getDLSize() << ", # of Credit Items: " << bs.getCLSize() << ", Net Value: $" << endl;
     fwrite << "------------------------------------------------------------------------------------------" << endl;
+
+    for(int row = 0; row < ui->DebitList->count(); row++){
+        QString qstring = ui->DebitList->item(row)->text();
+        string str = qstring.toStdString();
+        str = "Debit " + str;
+        fwrite << str << endl;
+    }
+
+    for(int row = 0; row < ui->CreditList->count(); row++){
+        QString qstring = ui->CreditList->item(row)->text();
+        string str = qstring.toStdString();
+        str = "Credit " + str;
+        fwrite << str << endl;
+    }
 
     fwrite.close();
 
