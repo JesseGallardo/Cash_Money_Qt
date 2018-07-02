@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>464</width>
-    <height>378</height>
+    <height>367</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -255,7 +255,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="CreateYear"/>
+      <widget class="QLineEdit" name="CreateYear">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="CreateButton">
@@ -283,7 +290,7 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>260</y>
+      <y>250</y>
       <width>71</width>
       <height>32</height>
      </rect>

@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <string.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "BudgetSheet.h"
@@ -15,7 +16,7 @@ BudgetSheet bs;
 bool fileLoaded = false;
 string loadedFName;
 string loadedMonth;
-int total;
+double total = 0;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -95,6 +96,8 @@ void MainWindow::updateDebitList(){
 
         ui->DebitList->addItem(item.c_str());
     }
+
+    ui->DebitList->sortItems(Qt::AscendingOrder);
 }
 
 void MainWindow::updateCreditList(){
@@ -117,6 +120,8 @@ void MainWindow::updateCreditList(){
 
         ui->CreditList->addItem(item.c_str());
     }
+
+    ui->CreditList->sortItems(Qt::AscendingOrder);
 }
 
 string MainWindow::monthToNum(string month){
@@ -183,6 +188,22 @@ void MainWindow::setSpecialRules(){
     ui->LoadYear->setValidator(new QIntValidator(0, 10000, this));
 }
 
+string MainWindow::spacesToNonSpace(string text){
+    int l = text.length();
+
+    char temp[l+1];
+    strcpy(temp, text.c_str());
+
+    for(int i = 0; i < l; i++){
+        if(temp[i] == ' '){
+            temp[i] = '_';
+        }
+    }
+
+    string ret(temp);
+    return ret;
+}
+
 /*Sockets*/
 void MainWindow::on_CreateButton_clicked()
 {
@@ -230,9 +251,11 @@ void MainWindow::on_NewItemButton_clicked()
 
     string itemType = ui->NewType->currentText().toStdString();
 
+    itemName = spacesToNonSpace(itemName);
+
     if(itemType == "Debit"){
         if(bs.addDebit(itemName, itemDate, itemType, itemValue) == true){
-            total += itemValue;
+            total += itemValue;            
             updateDebitList();
         }
         else{
@@ -244,8 +267,8 @@ void MainWindow::on_NewItemButton_clicked()
     }
     else{
         if(bs.addCredit(itemName, itemDate, itemType, itemValue)){
-            total -= itemValue;
-            updateCreditList();
+            total -= itemValue;          
+            updateCreditList();            
         }
         else{
             QMessageBox error;
@@ -286,34 +309,52 @@ void MainWindow::on_LoadButton_clicked()
     loadedMonth = month;
 
     string line;
-    int lineNum = 0;
-    int fiveLineNum = 0;
+    int lineNum = 1;
+
+    cout << "Reading File" << endl;
 
     while(getline(loadFile, line)){
+        cout << "Line #" << lineNum << endl;
+
         if(line == "empty"){
             break;
         }
-        else if(lineNum > 4){
-            if(line == "-----"){
-                fiveLineNum++;
-                if(fiveLineNum == 2){
-                    break;
-                }
-                continue;
-            }//if
-            else if(line == "Credit:"){
-                continue;
+        else{
+            if(lineNum == 1){
+                string temp = ithWord(line, 3 );
+                string totalVal = temp.substr(1, line.length()-1);
+                cout << totalVal << endl;
+                total = stod(totalVal);
             }
-            else{
-                /*Use the global budgetsheet item known as "bs"*/
-                if(fiveLineNum == 0){
-                    //read debit items
+            else if(lineNum > 2){
+                //TODO Finish this the above part is finished
+                string loadedType = ithWord(line, 1);
+
+                string loadedDate = ithWord(line, 2);
+
+                string loadedName = ithWord(line, 3);
+
+                string loadedVal = ithWord(line, 4);
+                double loadedValue = stod(loadedVal.substr(1, loadedVal.length()-1));
+
+                cout << loadedType << " " << loadedDate << " " << loadedName << " " << loadedValue << endl;
+
+                if(loadedType == "Debit"){
+                    bs.addDebit(loadedName, loadedDate, loadedType, loadedValue);
+                    cout << loadedName << " is successfully loaded!" << endl;
+                    updateDebitList();
                 }
-                else if(fiveLineNum == 1){
-                    //read credit items
+                else if(loadedType == "Credit"){
+                    bs.addCredit(loadedName, loadedDate, loadedType, loadedValue);
+                    cout << loadedName << " is successfully loaded!" << endl;
+                    updateCreditList();
                 }
-            }//else
-        }//else-if
+                else{
+                    cout << "This isn't a supported type!" << endl;
+                }
+            }
+        }
+        lineNum++;
     }//while
 
     loadFile.close();
@@ -330,7 +371,7 @@ void MainWindow::on_FinishedButton_clicked()
 
     fwrite.open(path, std::fstream::out | fstream::trunc);
 
-    fwrite << "# of Debit Items: " << bs.getDLSize() << ", # of Credit Items: " << bs.getCLSize() << ", Net Value: $" << endl;
+    fwrite << "Net Value: $" << total << endl;
     fwrite << "------------------------------------------------------------------------------------------" << endl;
 
     for(int row = 0; row < ui->DebitList->count(); row++){
@@ -352,6 +393,10 @@ void MainWindow::on_FinishedButton_clicked()
     loadedFName = "";
 
     ui->LoadButton->setEnabled(true);
+
+    ui->DebitList->clear();
+
+    ui->CreditList->clear();
 }
 
 void MainWindow::on_DebitRemoveButton_clicked()

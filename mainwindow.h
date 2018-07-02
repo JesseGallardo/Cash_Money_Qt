@@ -23,6 +23,8 @@ public:
     std::string monthToNum(std::string month);
     void setSpecialRules();
     std::string ithWord(std::string text, int ith);
+    void updateLCD();
+    std::string spacesToNonSpace(std::string text);
 
 private slots:
 
