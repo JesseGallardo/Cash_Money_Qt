@@ -167,6 +167,7 @@ string MainWindow::monthToNum(string month){
 }
 
 string MainWindow::ithWord(string text, int ith){
+    cout << "ithWord() text: " << text << endl;
     char *dup = strdup(text.c_str());
 
     int loop = 1;
@@ -277,6 +278,8 @@ void MainWindow::on_NewItemButton_clicked()
             error.exec();
         }
     }
+
+    cout << "Total Value: " << total << endl;
 }
 
 void MainWindow::on_LoadButton_clicked()
@@ -408,6 +411,14 @@ void MainWindow::on_DebitRemoveButton_clicked()
 
         string itemName = ithWord(itemString, 2);
 
+        string tempVal = ithWord(itemString, 3);
+        string totalVal = tempVal.substr(1, itemString.length()-1);
+        cout << "Removed value: " << totalVal << endl;
+        double val = stod(totalVal);
+        total -= val;
+
+        cout << "New Total Value: " << total << endl;
+
         bs.removeDebit(itemName);
 
         updateDebitList();
@@ -423,6 +434,14 @@ void MainWindow::on_CreditRemoveButton_clicked()
         string itemString = temp.toStdString();
 
         string itemName = ithWord(itemString, 2);
+
+        string tempVal = ithWord(itemString, 3);
+        string totalVal = tempVal.substr(1, itemString.length()-1);
+        cout << "Removed value: " << totalVal << endl;
+        double val = stod(totalVal);
+        total += val;
+
+        cout << "New Total Value: " << total << endl;
 
         bs.removeCredit(itemName);
 
