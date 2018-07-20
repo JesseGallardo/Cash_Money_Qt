@@ -14,7 +14,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void setMessages();
     void checkDirectory();
     void resizeQComboBoxes();
     std::string getFileDirectory();

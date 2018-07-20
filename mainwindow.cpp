@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     checkDirectory();
-    setMessages();
     resizeQComboBoxes();
     setSpecialRules();
 }
@@ -36,10 +35,6 @@ MainWindow::~MainWindow()
 }
 
 /*Nonsockets*/
-void MainWindow::setMessages(){
-    ui->statusBar->showMessage(tr("Welcome, please click the help button to know how to use this app!"));
-}
-
 void MainWindow::checkDirectory(){
     DIR *check;
     string path(getenv("HOME"));
@@ -448,3 +443,4 @@ void MainWindow::on_CreditRemoveButton_clicked()
         updateCreditList();
     }
 }
+
