@@ -1,5 +1,5 @@
 /*
- * BudgetSheet.cpp
+ * TransactionRegister.cpp
  *
  *  Created on: Jun 3, 2018
  *      Author: jesse
@@ -8,11 +8,11 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "BudgetSheet.h"
+#include "TransactionRegister.h"
 #include "Debit.h"
 #include "Credit.h"
 
-bool BudgetSheet::addDebit(string name, string date, string type, double value){
+bool TransactionRegister::addDebit(string name, string date, string type, double value){
     if(DebitList.find(name) == DebitList.end()){
         Debit temp(name, date, type ,value);
         DebitList.insert(make_pair(name, temp));
@@ -26,7 +26,7 @@ bool BudgetSheet::addDebit(string name, string date, string type, double value){
 
 }//addDebit
 
-void BudgetSheet::removeDebit(string name){
+void TransactionRegister::removeDebit(string name){
     map<string, Debit>::iterator it;
     it = DebitList.find(name);
     if(it != DebitList.end()){
@@ -38,7 +38,7 @@ void BudgetSheet::removeDebit(string name){
     }//else
 }//removeDebit
 
-void BudgetSheet::printDebit(string name){
+void TransactionRegister::printDebit(string name){
     map<string, Debit>::iterator it = DebitList.begin();
     it = DebitList.find(name);
     if(it != DebitList.end()){
@@ -53,11 +53,11 @@ void BudgetSheet::printDebit(string name){
     }
 }//printDebit
 
-int BudgetSheet::getDLSize(){
+int TransactionRegister::getDLSize(){
     return DebitList.size();
 }
 
-Debit BudgetSheet::getDebitAt(int index){
+Debit TransactionRegister::getDebitAt(int index){
     if(index < DebitList.size()){
         map<string, Debit>::iterator it = DebitList.begin();
 
@@ -77,7 +77,7 @@ Debit BudgetSheet::getDebitAt(int index){
 }
 
 
-bool BudgetSheet::addCredit(string name, string date, string type, double value){
+bool TransactionRegister::addCredit(string name, string date, string type, double value){
     //Credit temp = new Credit(name, date, type, value);
     if(CreditList.find(name) == CreditList.end()){
         Credit temp(name, date, type, value);
@@ -91,7 +91,7 @@ bool BudgetSheet::addCredit(string name, string date, string type, double value)
     }
 }//addCredit
 
-void BudgetSheet::removeCredit(string name){
+void TransactionRegister::removeCredit(string name){
     map<string, Credit>::iterator it;
     it = CreditList.find(name);
     if(it != CreditList.end()){
@@ -102,7 +102,7 @@ void BudgetSheet::removeCredit(string name){
         cout << name << " is not in the list!" << endl;
     }//else
 }
-void BudgetSheet::printCredit(string name){
+void TransactionRegister::printCredit(string name){
     map<string, Credit>::iterator it;
     it = CreditList.find(name);
     if(it != CreditList.end()){
@@ -117,11 +117,11 @@ void BudgetSheet::printCredit(string name){
     }
 }
 
-int BudgetSheet::getCLSize(){
+int TransactionRegister::getCLSize(){
     return CreditList.size();
 }
 
-Credit BudgetSheet::getCreditAt(int index){
+Credit TransactionRegister::getCreditAt(int index){
     if(index < CreditList.size()){
         map<string, Credit>::iterator it = CreditList.begin();
         for(int i = 0; i < CreditList.size(); i++){
@@ -137,6 +137,6 @@ Credit BudgetSheet::getCreditAt(int index){
     }
 }
 
-BudgetSheet::BudgetSheet() {
+TransactionRegister::TransactionRegister() {
 
 }

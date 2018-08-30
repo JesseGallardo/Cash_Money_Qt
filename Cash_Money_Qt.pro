@@ -28,13 +28,13 @@ SOURCES += \
         mainwindow.cpp \
     Debit.cpp \
     Credit.cpp \
-    BudgetSheet.cpp
+    TransactionRegister.cpp
 
 HEADERS += \
         mainwindow.h \
     Debit.h \
     Credit.h \
-    BudgetSheet.h
+    TransactionRegister.h
 
 FORMS += \
         mainwindow.ui

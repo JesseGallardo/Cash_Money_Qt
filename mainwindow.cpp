@@ -10,9 +10,9 @@
 #include <string.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "BudgetSheet.h"
+#include "TransactionRegister.h"
 
-BudgetSheet bs;
+TransactionRegister bs;
 bool fileLoaded = false;
 string loadedFName;
 string loadedMonth;
@@ -35,6 +35,18 @@ MainWindow::~MainWindow()
 }
 
 /*Nonsockets*/
+bool MainWindow::fileExists(string fName){
+    ifstream temp(fName.c_str());
+    if((bool)temp == true){
+        temp.close();
+        return true;
+    }
+    else{
+        temp.close();
+        return false;
+    }
+}
+
 void MainWindow::checkDirectory(){
     DIR *check;
     string path(getenv("HOME"));
@@ -217,6 +229,10 @@ void MainWindow::on_CreateButton_clicked()
 
     string path = getFileDirectory() + fname;
 
+    if(fileExists(path) == true){
+        return;
+    }
+
     ofstream newf(path);
     newf << "empty" << endl;
     newf.close();
@@ -251,7 +267,7 @@ void MainWindow::on_NewItemButton_clicked()
 
     if(itemType == "Debit"){
         if(bs.addDebit(itemName, itemDate, itemType, itemValue) == true){
-            total += itemValue;            
+            total += itemValue;
             updateDebitList();
         }
         else{
@@ -263,8 +279,8 @@ void MainWindow::on_NewItemButton_clicked()
     }
     else{
         if(bs.addCredit(itemName, itemDate, itemType, itemValue)){
-            total -= itemValue;          
-            updateCreditList();            
+            total -= itemValue;
+            updateCreditList();
         }
         else{
             QMessageBox error;

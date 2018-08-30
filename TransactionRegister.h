@@ -1,12 +1,12 @@
 /*
- * BudgetSheet.h
+ * TransactionRegister.h
  *
  *  Created on: Jun 3, 2018
  *      Author: jesse
  */
 
-#ifndef BUDGETSHEET_H_
-#define BUDGETSHEET_H_
+#ifndef TransactionRegister_H_
+#define TransactionRegister_H_
 
 #include <string> //for strings
 #include <map> //for maps
@@ -15,12 +15,12 @@
 
 using namespace std;
 
-class BudgetSheet {
+class TransactionRegister {
 private:
     map<string, Debit> DebitList; //list full of debit items
     map<string, Credit> CreditList;	 //list full of credit items
 public:
-    BudgetSheet();
+    TransactionRegister();
 
     bool addDebit(string name, string date, string type, double value); //adds a debit items to the list
     void removeDebit(string name); //removes a debit item from the list
@@ -35,4 +35,4 @@ public:
     Credit getCreditAt(int index);
 };
 
-#endif /* BUDGETSHEET_H_ */
+#endif /* TRANSACTIONREGISTER_H_ */

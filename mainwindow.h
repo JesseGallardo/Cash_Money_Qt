@@ -24,6 +24,7 @@ public:
     std::string ithWord(std::string text, int ith);
     void updateLCD();
     std::string spacesToNonSpace(std::string text);
+    bool fileExists(std::string fName);
 
 private slots:
 
