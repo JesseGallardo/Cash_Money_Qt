@@ -1,4 +1,4 @@
-#Project Cash Money
+Project Cash Money
 ---
 This purpose of this project is familiarize myself with C++ and the Gui application Qt. The reason Qt was used because I
 used it in a school project and was interested in using it again when I wanted to do a summer project. C++ was used
